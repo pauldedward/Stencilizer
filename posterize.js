@@ -5,6 +5,7 @@ let posterImage;
 let noiseP;
 let sketchP;
 let bgP;
+let mentionA;
 
 let noiseValSlider;
 let sketchColour;
@@ -32,6 +33,7 @@ function resetPage() {
     noiseP.remove();
     sketchP.remove();
     bgP.remove();
+    mentionA.remove();
 
     posterImage = null;
     inc = 0;
@@ -50,6 +52,7 @@ function addID() {
     sketchP.id("sketch-p");
     downloadButton.id("download-button");
     transparentBG.id("transparent-bg");
+    mentionA.id("mention-a");
 }
 
 function addInputEvents() {
@@ -103,6 +106,8 @@ function setup() {
    
     noiseP = createP("Adjust noise using slider");
     noiseValSlider = createSlider(0 ,255 ,100 ,1);
+
+    noiseValSlider.style("width", windowWidth / 1.5 + "px");
     
     sketchP = createP("sketch color");
     sketchColour = createColorPicker(50);
@@ -115,6 +120,8 @@ function setup() {
     stencilize = createButton("stencilize");
     downloadButton = createButton("download");
 
+    mentionA = createA("https://github.com/pauldedward/Stencilizer", "SourceCode Here", "_blank");
+
 
     colors = bgColour.color().levels;
     bgAlphaValue = 0;
@@ -122,6 +129,7 @@ function setup() {
     stencilize.hide();
     noiseValSlider.hide();
     downloadButton.hide();
+    noiseP.hide();
     
     addID();
 
@@ -175,6 +183,7 @@ function changeSizeOfImage() {
     stencilize.show();
     noiseValSlider.show();
     downloadButton.show();
+    noiseP.show();
     image(posterImage,0,0);
 }
 

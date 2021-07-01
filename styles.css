@@ -12,6 +12,7 @@ body, button, input {
 }
 
 body {
+    position: relative;
     min-width: 100%;
     margin-top: 1rem;
     flex-direction: column;
@@ -19,4 +20,48 @@ body {
     justify-content: space-around;
     align-items: center;
 }
-   
+
+input, p, button {
+    margin: .25rem;
+}
+
+p, button {
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    border-radius: .125rem;
+    padding: .5rem 2em;
+    font-size: 1.25rem;
+}
+
+a {
+    text-decoration: none;
+    color: steelblue;
+    font-size: 1.125rem;
+    margin: .5rem;
+    padding: .25rem;
+
+}
+
+a:hover {
+    opacity: .7;
+}
+
+#stencilize-button {
+    background-color: rgb(47, 255, 175);
+    color: rgb(20, 99, 99);
+    
+}
+
+#download-button {
+    background-color: rgb(131, 199, 255);
+    color: rgb(17, 55, 126);
+}
+
+#input-image {
+    color: saddlebrown;
+    position: relative;
+    left: 3rem;
+}
