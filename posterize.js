@@ -2,11 +2,15 @@ let imageInput;
 let imageElement;
 let posterImage;
 
+let noiseP;
+let sketchP;
+let bgP;
+
 let noiseValSlider;
 let sketchColour;
 let bgColour;
 let stencilize;
-let download;
+let downloadButton;
 let transparentBG;
 let colors;
 let bgAlphaValue;
@@ -16,19 +20,56 @@ let noisePxArray = [];
 let noiseValArray = [];
 let inc = 0;
 
+function resetPage() {
+    imageInput.remove();
+    imageElement.remove();
+    noiseValSlider.remove();
+    sketchColour.remove();
+    bgColour.remove();
+    stencilize.remove();
+    downloadButton.remove();
+    transparentBG.remove();
+    noiseP.remove();
+    sketchP.remove();
+    bgP.remove();
+
+    posterImage = null;
+    inc = 0;
+    resizeCanvas(100,100);
+    setup();
+}
+
+function addID() {
+    imageInput.id("input-image");
+    noiseValSlider.id("noise-slider");
+    sketchColour.id("sketch-colour-picker");
+    bgColour.id("bg-colour-picker");
+    stencilize.id("stencilize-button");
+    noiseP.id("noise-p");
+    bgP.id("bg-p");
+    sketchP.id("sketch-p");
+    downloadButton.id("download-button");
+    transparentBG.id("transparent-bg");
+}
+
 function setup() {
 
+    //create DOM Elements
     imageInput = createFileInput(handleFile);
-    imageInput.id("input-image");
-    createP("Adjust noise using slider");
+   
+    noiseP = createP("Adjust noise using slider");
     noiseValSlider = createSlider(0 ,255 ,100 ,1);
-    createP("sketch color");
+    
+    sketchP = createP("sketch color");
     sketchColour = createColorPicker(50);
-    createP("background colour");
+    
+    bgP = createP("background colour");
     bgColour = createColorPicker(255);  
-    stencilize = createButton("stencilize");
+    
     transparentBG = createCheckbox("transparent BG", true);
-    download = createButton("download");
+    
+    stencilize = createButton("stencilize");
+    downloadButton = createButton("download");
 
 
     colors = bgColour.color().levels;
@@ -36,12 +77,9 @@ function setup() {
 
     stencilize.hide();
     noiseValSlider.hide();
-    download.hide();
-
-    noiseValSlider.id("noise-slider");
-    sketchColour.id("sketch-colour-picker");
-    bgColour.id("bg-colour-picker");
-    stencilize.id("stencilize-button");
+    downloadButton.hide();
+    
+    addID();
 
     noiseValSlider.input(()=> stencilize.show());
     sketchColour.input(()=> {
@@ -66,7 +104,13 @@ function setup() {
 
     noiseValSlider.mousePressed(()=> stencilize.show());
     
-    download.mousePressed(()=> saveCanvas("poster","png"));
+    downloadButton.mousePressed(()=> {
+        saveCanvas("poster","png");
+        imageInput.show();
+        downloadButton.hide();
+        clear();
+        resetPage();
+    });
 
     stencilize.mousePressed(()=> {
         stencilize.hide();
@@ -121,7 +165,7 @@ function changeSizeOfImage() {
     posterImage.loadPixels();
     stencilize.show();
     noiseValSlider.show();
-    download.show();
+    downloadButton.show();
     image(posterImage,0,0);
 }
 
