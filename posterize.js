@@ -52,8 +52,52 @@ function addID() {
     transparentBG.id("transparent-bg");
 }
 
+function addInputEvents() {
+    noiseValSlider.input(()=> stencilize.show());
+    sketchColour.input(()=> {
+        changeColour();
+        loop();
+    });
+    bgColour.input(()=> {
+        changeColour();
+        loop();
+    });
+
+    transparentBG.changed(()=> {
+        if(transparentBG.checked()) {
+            bgAlphaValue = 0;
+            clear();
+        } else {
+            bgAlphaValue = 255;
+        }
+        changeColour();
+        loop();
+    });
+
+}
+
+function addMouseEvents() {
+
+    noiseValSlider.mousePressed(()=> stencilize.show());
+    
+    downloadButton.mousePressed(()=> {
+        saveCanvas("poster","png");
+        imageInput.show();
+        downloadButton.hide();
+        resetPage();
+    });
+
+    stencilize.mousePressed(()=> {
+        stencilize.hide();
+        calculateAgain();
+        changeColour();
+        loop();
+    });
+}
+
 function setup() {
 
+    clear();
     //create DOM Elements
     imageInput = createFileInput(handleFile);
    
@@ -81,43 +125,8 @@ function setup() {
     
     addID();
 
-    noiseValSlider.input(()=> stencilize.show());
-    sketchColour.input(()=> {
-        changeColour();
-        loop();
-    });
-    bgColour.input(()=> {
-        changeColour();
-        loop();
-    });
-
-    transparentBG.changed(()=> {
-        if(transparentBG.checked()) {
-            bgAlphaValue = 0;
-            clear();
-        } else {
-            bgAlphaValue = 255;
-        }
-        changeColour();
-        loop();
-    });
-
-    noiseValSlider.mousePressed(()=> stencilize.show());
-    
-    downloadButton.mousePressed(()=> {
-        saveCanvas("poster","png");
-        imageInput.show();
-        downloadButton.hide();
-        clear();
-        resetPage();
-    });
-
-    stencilize.mousePressed(()=> {
-        stencilize.hide();
-        calculateAgain();
-        changeColour();
-        loop();
-    });
+    addInputEvents();
+    addMouseEvents();
     
     noLoop();
 }
